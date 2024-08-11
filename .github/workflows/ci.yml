@@ -42,4 +42,9 @@ jobs:
           sysctl -n hw.ncpu
           system_profiler SPHardwareDataType
 
+      - name: test
+        run: |
+          pip install torch
+          pip list
+
 
