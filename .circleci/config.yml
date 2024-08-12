@@ -25,7 +25,7 @@ jobs:
           name: "Say hello"
           command: |
               python --version
-              pip3 list
+              
       - run:
           name: "Say hello"
           command: |
