@@ -1,29 +1,28 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow only on push events to the "main" branch
   push:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: flyci-macos-14-m2
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runner's shell
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install --pre torch cloudinary==1.40.0 numpy==1.26.4 opencv-python-headless opencv-contrib-python-headless fasttext-langdetect==1.0.5 googlesearch-python==1.2.4 boto3 easyocr alive_progress==3.1.5 --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+
+      - name: Print python packages
+        run: pip list
+      
       - name: Run a one-line script
         run: echo Hello, world!
 
