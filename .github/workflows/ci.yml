@@ -8,7 +8,8 @@ on:
 
 jobs:
   build:
-    runs-on: flyci-macos-14-m2
+    # runs-on: flyci-macos-14-m2
+    runs-on: macos-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
