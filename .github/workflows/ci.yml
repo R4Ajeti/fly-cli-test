@@ -20,9 +20,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: env
-          key: ${{ runner.os }}-env-${{ hashFiles('**/env/**') }}-v1
+          key: ${{ runner.os }}-env-${{ hashFiles('**/env/**') }}-m1-v1
           restore-keys: |
-            ${{ runner.os }}-env-v1
+            ${{ runner.os }}-env-m1-v1
 
       # Restore from cache or run a command if the cache is not found
       - name: Restore or Generate Folder
@@ -69,19 +69,19 @@ jobs:
       #     pip install torch
       #     pip list
 
-      # - name: test2
-      #   run: |
-      #     curl -O https://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_720p_h264.mov
-      #     ls
-      #     brew --version
-      #     node --version
-      #     python --version
-      #     brew install ffmpeg
-      #     ffmpeg -version
+      - name: test2
+        run: |
+          curl -O https://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_720p_h264.mov
+          ls
+          brew --version
+          node --version
+          python --version
+          brew install ffmpeg
+          ffmpeg -version
 
-      # - name: test3
-      #   run: |
-      #     mkdir -p output
-      #     ffmpeg -i big_buck_bunny_720p_h264.mov -vf "fps=2,crop=300:200:100:100,scale=640:480" output/output_%03d.png
+      - name: test3
+        run: |
+          mkdir -p output
+          ffmpeg -i big_buck_bunny_720p_h264.mov -vf "fps=2,crop=300:200:100:100,scale=640:480" output/output_%03d.png
 
 
