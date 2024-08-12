@@ -14,20 +14,36 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      # Cache the folder
+      - name: Cache env
+        uses: actions/cache@v3
         with:
-          python-version: '3.12'
-          cache: 'pip'  # Optional: Use pip cache for dependencies
+          path: env
+          key: ${{ runner.os }}-env-${{ hashFiles('**/env/**') }}-v1
+          restore-keys: |
+            ${{ runner.os }}-env-v1
 
-      # Install the packages directly
-      - run: pip install --pre torch cloudinary==1.40.0 numpy==1.26.4 \
+      # Restore from cache or run a command if the cache is not found
+      - name: Restore or Generate Folder
+        run: |
+          if [ ! -d "env" ]; then
+            echo "Cache not found, generating folder..."
+            python -m venv env
+            source env/bin/activate
+            pip install --pre torch cloudinary==1.40.0 numpy==1.26.4 \
              opencv-python-headless opencv-contrib-python-headless \
              fasttext-langdetect==1.0.5 googlesearch-python==1.2.4 \
              boto3 easyocr alive_progress==3.1.5 \
              --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+          else
+            echo "Cache found, using cached folder."
+          fi
       
       - name: Print python packages
-        run: pip list
+        run: |
+          du -sh env
+          source env/bin/activate
+          pip list
       
       - name: Run a one-line script
         run: echo Hello, world!
